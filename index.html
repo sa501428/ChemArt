@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>ChemArt</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- stylesheets -->
+	<link rel="icon" type="image/png" href="favicon.ico">
+	<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+	<style>
+		.dragme{
+			position:relative;
+			width: 270px;
+			height: 203px;
+			cursor: move;
+		}
+		#draggable {
+			background-color: #ccc;
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+
+<body id="home">
+
+	<div id="draggable" class="dragme">"Hello World!"</div>
+	<img src="https://lh4.googleusercontent.com/-8tqTFxi2ebU/Ufo4j_thf7I/AAAAAAAADFM/_ZBQctm9e8E/w270-h203-no/flower.jpg" alt="drag-and-drop image script" title="drag-and-drop image script" class="dragme">
+
+	<div id="footer-white" style="padding-top:10px;">
+		<div class="container">
+			<div class="row credits">
+				<div class="col-md-12" style="color:#000 !important;">
+					Copyright © 2014. Shamim
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- javascript -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		function startDrag(e) {
+			// determine event object
+			if (!e) {
+				var e = window.event;
+			}
+
+			// IE uses srcElement, others use target
+			var targ = e.target ? e.target : e.srcElement;
+
+			if (targ.className != 'dragme') {return};
+			// calculate event X, Y coordinates
+			offsetX = e.clientX;
+			offsetY = e.clientY;
+
+			// assign default values for top and left properties
+			if(!targ.style.left) { targ.style.left='0px'};
+			if (!targ.style.top) { targ.style.top='0px'};
+
+			// calculate integer values for top and left 
+			// properties
+			coordX = parseInt(targ.style.left);
+			coordY = parseInt(targ.style.top);
+			drag = true;
+
+			// move div element
+			document.onmousemove=dragDiv;		
+		}
+		
+		function dragDiv(e) {
+			if (!drag) {return};
+			if (!e) { var e= window.event};
+			var targ=e.target?e.target:e.srcElement;
+			// move div element
+			targ.style.left=coordX+e.clientX-offsetX+'px';
+			targ.style.top=coordY+e.clientY-offsetY+'px';
+			return false;
+		}
+		
+		function stopDrag() {
+			drag=false;
+		}
+		
+		window.onload = function() {
+			document.onmousedown = startDrag;
+			document.onmouseup = stopDrag;
+		}
+	</script>
+
+<!--form>
+<input type="button" value="random link!" onClick="randomlinks()">
+</form-->
+
+</body>
+
+</html>
